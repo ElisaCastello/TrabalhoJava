@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Abertura MEI</title>
+    <style>
+        /* Resetando alguns estilos padrões do navegador */
+        body, h1, p, a, span, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Definindo o estilo do corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo do contêiner de dados */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Estilo das informações */
+        .info {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .info span {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        /* Botões: Voltar e Imprimir */
+        a, button {
+            display: inline-block;
+            margin-top: 30px;
+            text-align: center;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            width: 100%;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+
+        button {
+            background-color: #27ae60;
+            color: #fff;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+
+        /* Ajustando o layout para telas menores */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            a, button {
+                padding: 12px 20px;
+            }
+        }
+    </style>
+    <script>
+        // Função para acionar a impressão da página
+        function imprimir() {
+            window.print();
+        }
+
+        // Função para gerar e enviar os dados para o WhatsApp
+        function enviarWhatsApp() {
+            // Acessando os valores diretamente dos elementos HTML
+            const nome = document.getElementById('nome').textContent.trim();
+            const cpf = document.getElementById('cpf').textContent.trim();
+            const senhaGov = document.getElementById('senhaGov').textContent.trim();
+            const tituloEleitor = document.getElementById('tituloEleitor').textContent.trim();
+            const enderecoResidencial = document.getElementById('enderecoResidencial').textContent.trim();
+            const cepResidencial = document.getElementById('cepResidencial').textContent.trim();
+            const enderecoComercial = document.getElementById('enderecoComercial').textContent.trim();
+            const cepComercial = document.getElementById('cepComercial').textContent.trim();
+            const cnae = document.getElementById('cnae').textContent.trim();
+            const email = document.getElementById('email').textContent.trim();
+            const telefone = document.getElementById('telefone').textContent.trim();
+
+            // Criando a lista formatada com os dados
+            const listaDados = `
+*Dados MEI:*
+
+- ${nome}
+- ${cpf}
+- ${senhaGov}
+- ${tituloEleitor}
+- ${enderecoResidencial}
+- ${cepResidencial}
+- ${enderecoComercial}
+- ${cepComercial}
+- ${cnae}
+- ${email}
+- ${telefone}
+`;
+
+            // Codificando a mensagem para enviar no WhatsApp
+            const mensagem = encodeURIComponent(listaDados);
+
+            // Link para abrir o WhatsApp com a mensagem
+            const linkWhatsApp = `https://wa.me/5521965777903?text=${mensagem}`;
+
+            // Abrindo o link do WhatsApp
+            window.open(linkWhatsApp, '_blank');
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>Dados do MEI</h1>
+    <div class="info" id="nome">
+        <p>Nome: <span th:text="${nome}"></span></p>
+    </div>
+    <div class="info" id="cpf">
+        <p>CPF: <span th:text="${cpf}"></span></p>
+    </div>
+    <div class="info" id="senhaGov">
+        <p>Senha Gov.br: <span th:text="${senhaGov}"></span></p>
+    </div>
+    <div class="info" id="tituloEleitor">
+        <p>Título de Eleitor: <span th:text="${tituloEleitor}"></span></p>
+    </div>
+    <div class="info" id="enderecoResidencial">
+        <p>Endereço Residencial: <span th:text="${enderecoResidencial}"></span></p>
+    </div>
+    <div class="info" id="cepResidencial">
+        <p>CEP Residencial: <span th:text="${cepResidencial}"></span></p>
+    </div>
+    <div class="info" id="enderecoComercial">
+        <p>Endereço Comercial: <span th:text="${enderecoComercial}"></span></p>
+    </div>
+    <div class="info" id="cepComercial">
+        <p>CEP Comercial: <span th:text="${cepComercial}"></span></p>
+    </div>
+    <div class="info" id="cnae">
+        <p>CNAE: <span th:text="${cnae}"></span></p>
+    </div>
+    <div class="info" id="email">
+        <p>E-mail: <span th:text="${email}"></span></p>
+    </div>
+    <div class="info" id="telefone">
+        <p>Telefone: <span th:text="${telefone}"></span></p>
+    </div>
+
+    <a href="/">Voltar</a>
+    <!-- Botão de Imprimir -->
+    <button onclick="imprimir()">Imprimir</button>
+
+    <!-- Botão para enviar os dados ao WhatsApp -->
+    <button onclick="enviarWhatsApp()">Enviar para WhatsApp</button>
+</div>
+</body>
+</html>
